@@ -32,6 +32,7 @@ const CartItem = ({ item, onRemove, onEdit }) => {
                     <input 
                         type="number" 
                         value={quantity} 
+                        min="1"
                         onChange={handleQuantityChange}
                         style={{marginRight: '10px'}}
                     />

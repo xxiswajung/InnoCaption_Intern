@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 
-const ProductList = ({ products, onAddToCart }) => {
+const ProductList = ({ products, onAddToCart, onLoadAllProducts }) => {
     // const [product, setProduct] = useState([]);
 
     const scrollContainerStyle = {
@@ -17,9 +17,18 @@ const ProductList = ({ products, onAddToCart }) => {
         fontSize: '15px' 
     };
 
+    const ProductListStyle = {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px'
+    };
+
     return (
         <div>
-            <h2>Product List</h2>
+            <div style={ProductListStyle}>
+                <h2>Product List</h2>
+                <Button style={buttonStyle} variant="secondary" onClick={onLoadAllProducts}>All List</Button>
+            </div>
             <div style={scrollContainerStyle}>
                 {products.map(product => (
                     <div key={product.id} style={{ marginBottom: '20px' }}>

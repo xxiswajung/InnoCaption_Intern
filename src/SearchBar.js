@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, placeholder }) => {
     const [searchValue, setSearchValue] = useState('');
 
     const handleSearch = () => {
@@ -12,7 +12,8 @@ const SearchBar = ({ onSearch }) => {
     const searchStyle = {
         display: 'flex',
         alignItems: 'center',
-        gap: '10px' 
+        gap: '10px',
+        marginBottom: '10px'
     };
 
     const inputStyle = {
@@ -33,7 +34,7 @@ const SearchBar = ({ onSearch }) => {
                 type="text" 
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)} 
-                placeholder="Search products..." 
+                placeholder={placeholder} 
                 style={inputStyle}
             />
             <Button style={buttonStyle} onClick={handleSearch}>Search</Button>

@@ -9,6 +9,7 @@ const App = () => {
     const [cartItems, setCartItems] = useState([]);
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
 
     useEffect(() => {
       fetch('https://dummyjson.com/products')
@@ -18,6 +19,12 @@ const App = () => {
               setFilteredProducts(data.products); 
           });
      }, []);
+
+    // useEffect(() => {
+    //     fetch('https://dummyjson.com/products/categories')
+    //         .then(response => response.json())
+    //         .then(data => setCategories(data)); 
+    // }, []);
 
     const handleAddToCart = (product) => {
         setCartItems([...cartItems, { ...product, quantity: 1 }]);
@@ -35,7 +42,7 @@ const App = () => {
         );
     };
 
-    const handleSearch = (searchTerm) => {
+    const handleSearchByName = (searchTerm) => {
       if (!searchTerm) {
           setFilteredProducts(products);
       } else {
@@ -45,6 +52,16 @@ const App = () => {
           ));
       }
   };
+
+    const handleSearchByCategory = (category) => {
+        fetch(`https://dummyjson.com/products/category/${category}`)
+            .then(response => response.json())
+            .then(data => setFilteredProducts(data.products));
+    };
+
+    const handleLoadAllProducts = () => {
+        setFilteredProducts(products);
+    };
 
   const centerStyle = {
     display: 'flex',
@@ -67,9 +84,10 @@ const App = () => {
     return (
         <div style={centerStyle}>
             <h1>Welcome to E-commerce website</h1>
-            <SearchBar onSearch={handleSearch} />
+            <SearchBar onSearch={handleSearchByName} placeholder="Search by product name..." />
+            <SearchBar onSearch={handleSearchByCategory} placeholder="Search by category" />
             <div style={layoutStyle}>
-                <ProductList style={{ flex: 1, marginRight: '20px' }} products={filteredProducts} onAddToCart={handleAddToCart} />
+                <ProductList style={{ flex: 1, marginRight: '20px' }} products={filteredProducts} onAddToCart={handleAddToCart} onLoadAllProducts={handleLoadAllProducts} />
                 <Cart style={{ flex: 1 }} cartItems={cartItems} onRemove={handleRemoveFromCart} onEdit={handleEditCartItem} />
             </div>
         </div>
